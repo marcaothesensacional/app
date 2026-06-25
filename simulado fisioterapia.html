@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado – Fundamentos e Ética da Fisioterapia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --verde: #1a6b4a;
+    --verde-light: #e8f5ee;
+    --verde-mid: #2d9b6f;
+    --azul: #1e4a7c;
+    --azul-light: #e8f0fa;
+    --vermelho: #c0392b;
+    --vermelho-light: #fdecea;
+    --amarelo: #f0a500;
+    --amarelo-light: #fff8e1;
+    --cinza: #f4f6f8;
+    --texto: #1a1a2e;
+    --texto-suave: #5a6072;
+    --borda: #dde3ed;
+    --branco: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--verde) 0%, var(--azul) 100%);
+    padding: 24px 20px;
+    text-align: center;
+    color: white;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  header p { font-size: 0.85rem; opacity: 0.85; }
+
+  /* ── NAV TABS ── */
+  nav {
+    display: flex;
+    background: white;
+    border-bottom: 2px solid var(--borda);
+    overflow-x: auto;
+  }
+  nav button {
+    flex: 1;
+    min-width: 90px;
+    padding: 12px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--texto-suave);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav button.ativo {
+    color: var(--verde);
+    border-bottom-color: var(--verde);
+  }
+
+  /* ── CONTAINER ── */
+  main { max-width: 780px; margin: 0 auto; padding: 20px 16px; }
+
+  /* ── TELA INICIAL ── */
+  #tela-inicio { text-align: center; }
+  #tela-inicio h2 { font-size: 1.4rem; margin-bottom: 8px; color: var(--azul); }
+  #tela-inicio p { color: var(--texto-suave); margin-bottom: 24px; font-size: 0.9rem; }
+
+  .cards-temas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .card-tema {
+    background: white;
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+  }
+  .card-tema:hover { border-color: var(--verde); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+  .card-tema.selecionado { border-color: var(--verde); background: var(--verde-light); }
+  .card-tema .icone { font-size: 1.8rem; margin-bottom: 8px; }
+  .card-tema h3 { font-size: 0.85rem; font-weight: 700; color: var(--azul); margin-bottom: 4px; }
+  .card-tema p { font-size: 0.75rem; color: var(--texto-suave); }
+  .card-tema .qtd { font-size: 0.7rem; font-weight: 700; color: var(--verde); margin-top: 6px; }
+  .check-tema {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--borda);
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+  }
+  .card-tema.selecionado .check-tema { background: var(--verde); border-color: var(--verde); color: white; }
+
+  .opcoes-simulado {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--borda);
+    text-align: left;
+  }
+  .opcoes-simulado h3 { font-size: 0.9rem; margin-bottom: 14px; color: var(--azul); }
+  .opcao-linha { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .opcao-linha label { font-size: 0.82rem; color: var(--texto-suave); flex: 0 0 auto; }
+  .opcao-linha select, .opcao-linha input[type=number] {
+    padding: 6px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--texto);
+    background: white;
+  }
+
+  /* ── BOTÕES ── */
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-verde { background: var(--verde); color: white; }
+  .btn-verde:hover { background: var(--verde-mid); transform: translateY(-1px); }
+  .btn-cinza { background: var(--cinza); color: var(--texto-suave); }
+  .btn-cinza:hover { background: var(--borda); }
+  .btn-azul { background: var(--azul); color: white; }
+  .btn-azul:hover { background: #163a63; }
+
+  /* ── QUESTÃO ── */
+  #tela-simulado { display: none; }
+
+  .progresso-bar {
+    height: 6px;
+    background: var(--borda);
+    border-radius: 3px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progresso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--verde), var(--verde-mid));
+    border-radius: 3px;
+    transition: width .4s ease;
+  }
+
+  .info-questao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .info-questao span { font-size: 0.78rem; color: var(--texto-suave); font-weight: 600; }
+  .badge-tema {
+    font-size: 0.68rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+
+  .card-questao {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    margin-bottom: 16px;
+  }
+  .enunciado { font-size: 0.95rem; line-height: 1.6; font-weight: 500; margin-bottom: 20px; }
+
+  .alternativas { display: flex; flex-direction: column; gap: 10px; }
+  .alt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid var(--borda);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .18s;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .alt:hover:not(.desabilitada) { border-color: var(--azul); background: var(--azul-light); }
+  .alt .letra {
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cinza);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    transition: all .18s;
+  }
+  .alt.correta { border-color: var(--verde); background: var(--verde-light); }
+  .alt.correta .letra { background: var(--verde); color: white; }
+  .alt.errada { border-color: var(--vermelho); background: var(--vermelho-light); }
+  .alt.errada .letra { background: var(--vermelho); color: white; }
+  .alt.desabilitada { cursor: default; opacity: 0.85; }
+
+  .feedback {
+    display: none;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+  .feedback.correto { background: var(--verde-light); border-left: 4px solid var(--verde); color: var(--verde); }
+  .feedback.errado { background: var(--vermelho-light); border-left: 4px solid var(--vermelho); color: var(--vermelho); }
+  .feedback strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+  .feedback p { color: var(--texto); }
+
+  .nav-questoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ── RESULTADO ── */
+  #tela-resultado { display: none; text-align: center; }
+  .resultado-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1);
+    margin-bottom: 20px;
+  }
+  .nota-grande {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 16px 0 8px;
+  }
+  .nota-grande.aprovado { color: var(--verde); }
+  .nota-grande.reprovado { color: var(--vermelho); }
+  .status-label { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .status-label.aprovado { color: var(--verde); }
+  .status-label.reprovado { color: var(--vermelho); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .stat { background: var(--cinza); border-radius: 10px; padding: 14px 8px; }
+  .stat .num { font-size: 1.5rem; font-weight: 700; }
+  .stat .rotulo { font-size: 0.72rem; color: var(--texto-suave); margin-top: 2px; }
+  .stat .num.verde { color: var(--verde); }
+  .stat .num.vermelho { color: var(--vermelho); }
+
+  .resumo-temas {
+    text-align: left;
+    margin-top: 16px;
+  }
+  .resumo-temas h4 { font-size: 0.85rem; color: var(--texto-suave); margin-bottom: 10px; }
+  .tema-linha {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px; font-size: 0.82rem;
+  }
+  .tema-linha .nome { flex: 1; }
+  .tema-linha .barra-wrap { flex: 2; height: 8px; background: var(--borda); border-radius: 4px; overflow: hidden; }
+  .tema-linha .barra-fill { height: 100%; border-radius: 4px; }
+  .tema-linha .pct { flex: 0 0 36px; text-align: right; font-weight: 700; font-size: 0.78rem; }
+
+  /* ── REVISÃO ── */
+  #tela-revisao { display: none; }
+  .revisao-item {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--borda);
+  }
+  .revisao-item.certa { border-left-color: var(--verde); }
+  .revisao-item.errada { border-left-color: var(--vermelho); }
+  .revisao-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .revisao-header .badge { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+  .badge-certa { background: var(--verde-light); color: var(--verde); }
+  .badge-errada { background: var(--vermelho-light); color: var(--vermelho); }
+  .revisao-q { font-size: 0.88rem; font-weight: 500; margin-bottom: 10px; line-height: 1.5; }
+  .revisao-resp { font-size: 0.8rem; }
+  .revisao-correta { color: var(--verde); font-weight: 600; }
+  .revisao-escolha { color: var(--vermelho); }
+  .revisao-exp { font-size: 0.78rem; color: var(--texto-suave); margin-top: 8px; line-height: 1.5; border-top: 1px solid var(--borda); padding-top: 8px; }
+
+  /* ── FLASHCARDS ── */
+  #tela-flash { display: none; }
+  .flash-controles { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .flash-controles select {
+    padding: 7px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    flex: 1;
+  }
+  .card-flash-wrap { perspective: 1000px; cursor: pointer; margin-bottom: 16px; }
+  .card-flash {
+    width: 100%;
+    min-height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .5s ease;
+  }
+  .card-flash.virado { transform: rotateY(180deg); }
+  .flash-frente, .flash-verso {
+    position: absolute;
+    width: 100%;
+    min-height: 200px;
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backface-visibility: hidden;
+  }
+  .flash-frente { background: white; box-shadow: 0 4px 20px rgba(0,0,0,.1); border: 2px solid var(--borda); }
+  .flash-verso { background: linear-gradient(135deg, var(--verde), var(--azul)); color: white; transform: rotateY(180deg); box-shadow: 0 4px 20px rgba(0,0,0,.15); }
+  .flash-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 10px; }
+  .flash-texto { font-size: 0.95rem; font-weight: 500; line-height: 1.55; }
+  .flash-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .flash-contador { font-size: 0.82rem; color: var(--texto-suave); font-weight: 600; }
+  .flash-dica { font-size: 0.72rem; text-align: center; color: var(--texto-suave); margin-bottom: 10px; }
+
+  /* ── CRONÔMETRO ── */
+  .cronometro-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  }
+  .cronometro-display {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--azul);
+  }
+  .cronometro-display.urgente { color: var(--vermelho); animation: pisca .7s infinite; }
+  @keyframes pisca { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  .hidden { display: none !important; }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .cards-temas { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📋 Simulado · Fisioterapia</h1>
+  <p>Fundamentos e Ética Profissional</p>
+</header>
+
+<nav>
+  <button class="ativo" onclick="mostrarTela('inicio')">🏠 Início</button>
+  <button onclick="mostrarTela('simulado-config')">📝 Simulado</button>
+  <button onclick="mostrarTela('flash')">🃏 Flashcards</button>
+  <button onclick="mostrarTela('revisao')" id="btn-revisao" style="display:none">🔍 Revisão</button>
+</nav>
+
+<main>
+
+<!-- ═══════ TELA INÍCIO ═══════ -->
+<div id="tela-inicio">
+  <div style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;border:1px solid var(--borda);">
+    <h2 style="font-size:1rem;margin-bottom:14px;color:var(--azul);">📚 Tópicos abordados</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>⚖️</span><span><strong>Bases Legais</strong> – Decreto 938/69, Lei 6.316/75, Res. 424/2013</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>🏛️</span><span><strong>COFFITO e CREFITO</strong> – estrutura, funções e atribuições</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>👥</span><span><strong>Parâmetros Assistenciais</strong> – jornada, pacientes por turno</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>♿</span><span><strong>Noções sobre Deficiências</strong> – tipos, capacitismo, inclusão</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>🧭</span><span><strong>Ética e Moral</strong> – conceitos, filósofos, diferenças</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:0.83rem;">
+        <span>📜</span><span><strong>Código de Ética</strong> – princípios bioéticos, proibições, sigilo</span>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-verde" onclick="mostrarTela('simulado-config')">▶ Iniciar Simulado</button>
+      <button class="btn btn-cinza" onclick="mostrarTela('flash')">🃏 Ver Flashcards</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CONFIG SIMULADO ═══════ -->
+<div id="tela-simulado-config" style="display:none;">
+  <h2 style="font-size:1.1rem;margin-bottom:4px;color:var(--azul);">Configurar Simulado</h2>
+  <p style="font-size:0.82rem;color:var(--texto-suave);margin-bottom:16px;">Selecione os temas que deseja praticar:</p>
+
+  <div class="cards-temas" id="cards-temas">
+    <div class="card-tema selecionado" data-tema="bases" onclick="toggleTema(this,'bases')">
+      <div class="check-tema">✓</div>
+      <div class="icone">⚖️</div>
+      <h3>Bases Legais</h3>
+      <p>Regulamentação, leis, decretos</p>
+      <div class="qtd">12 questões</div>
+    </div>
+    <div class="card-tema selecionado" data-tema="coffito" onclick="toggleTema(this,'coffito')">
+      <div class="check-tema">✓</div>
+      <div class="icone">🏛️</div>
+      <h3>COFFITO / CREFITO</h3>
+      <p>Estrutura, funções, atribuições</p>
+      <div class="qtd">10 questões</div>
+    </div>
+    <div class="card-tema selecionado" data-tema="parametros" onclick="toggleTema(this,'parametros')">
+      <div class="check-tema">✓</div>
+      <div class="icone">👥</div>
+      <h3>Parâmetros</h3>
+      <p>Jornada, atendimento por turno</p>
+      <div class="qtd">8 questões</div>
+    </div>
+    <div class="card-tema selecionado" data-tema="deficiencias" onclick="toggleTema(this,'deficiencias')">
+      <div class="check-tema">✓</div>
+      <div class="icone">♿</div>
+      <h3>Deficiências</h3>
+      <p>Tipos, capacitismo, inclusão</p>
+      <div class="qtd">8 questões</div>
+    </div>
+    <div class="card-tema selecionado" data-tema="etica" onclick="toggleTema(this,'etica')">
+      <div class="check-tema">✓</div>
+      <div class="icone">🧭</div>
+      <h3>Ética e Moral</h3>
+      <p>Conceitos, filósofos, diferenças</p>
+      <div class="qtd">10 questões</div>
+    </div>
+    <div class="card-tema selecionado" data-tema="codigo" onclick="toggleTema(this,'codigo')">
+      <div class="check-tema">✓</div>
+      <div class="icone">📜</div>
+      <h3>Código de Ética</h3>
+      <p>Princípios, deveres, proibições</p>
+      <div class="qtd">12 questões</div>
+    </div>
+  </div>
+
+  <div class="opcoes-simulado">
+    <h3>⚙️ Opções</h3>
+    <div class="opcao-linha">
+      <label>Modo:</label>
+      <select id="modo-select">
+        <option value="normal">Normal (sem limite de tempo)</option>
+        <option value="cronometro">Com cronômetro por questão</option>
+        <option value="prova">Modo Prova (tempo total)</option>
+      </select>
+    </div>
+    <div class="opcao-linha" id="opcao-qtd">
+      <label>Questões:</label>
+      <select id="qtd-select">
+        <option value="10">10 questões</option>
+        <option value="20" selected>20 questões</option>
+        <option value="30">30 questões</option>
+        <option value="todas">Todas</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-verde" onclick="iniciarSimulado()">▶ Começar</button>
+    <button class="btn btn-cinza" onclick="mostrarTela('inicio')">← Voltar</button>
+  </div>
+</div>
+
+<!-- ═══════ SIMULADO ═══════ -->
+<div id="tela-simulado" style="display:none;">
+  <div class="cronometro-bar">
+    <div>
+      <div id="cronometro-display" class="cronometro-display hidden">⏱ <span id="tempo-val">00:00</span></div>
+      <div id="sem-cronometro" style="font-size:0.78rem;color:var(--texto-suave);font-weight:600;">📝 Sem limite de tempo</div>
+    </div>
+    <div style="font-size:0.78rem;color:var(--texto-suave);font-weight:600;" id="placar-live">✅ 0 &nbsp; ❌ 0</div>
+  </div>
+
+  <div class="progresso-bar"><div class="progresso-fill" id="progresso-fill"></div></div>
+  <div class="info-questao">
+    <span id="info-num">Questão 1 de 20</span>
+    <span class="badge-tema" id="badge-tema-atual"></span>
+  </div>
+
+  <div class="card-questao">
+    <div class="enunciado" id="enunciado"></div>
+    <div class="alternativas" id="alternativas"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <div class="nav-questoes">
+    <button class="btn btn-cinza" id="btn-anterior" onclick="irQuestao(-1)">← Anterior</button>
+    <div style="font-size:0.78rem;color:var(--texto-suave);" id="hint-responda">Selecione uma alternativa</div>
+    <button class="btn btn-verde" id="btn-proxima" onclick="irQuestao(1)">Próxima →</button>
+  </div>
+</div>
+
+<!-- ═══════ RESULTADO ═══════ -->
+<div id="tela-resultado" style="display:none;">
+  <div class="resultado-card">
+    <div style="font-size:2.5rem;" id="emoji-resultado"></div>
+    <div class="nota-grande" id="nota-display"></div>
+    <div class="status-label" id="status-display"></div>
+    <p style="font-size:0.82rem;color:var(--texto-suave);margin-top:6px;" id="msg-resultado"></p>
+
+    <div class="stats-grid">
+      <div class="stat"><div class="num verde" id="res-certas">0</div><div class="rotulo">Certas</div></div>
+      <div class="stat"><div class="num vermelho" id="res-erradas">0</div><div class="rotulo">Erradas</div></div>
+      <div class="stat"><div class="num" id="res-total">0</div><div class="rotulo">Total</div></div>
+    </div>
+
+    <div class="resumo-temas" id="resumo-temas"></div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <button class="btn btn-verde" onclick="mostrarRevisao()">🔍 Revisar Questões</button>
+    <button class="btn btn-azul" onclick="mostrarTela('simulado-config')">🔄 Novo Simulado</button>
+    <button class="btn btn-cinza" onclick="mostrarTela('inicio')">🏠 Início</button>
+  </div>
+</div>
+
+<!-- ═══════ REVISÃO ═══════ -->
+<div id="tela-revisao" style="display:none;">
+  <h2 style="font-size:1.1rem;margin-bottom:16px;color:var(--azul);">🔍 Revisão do Simulado</h2>
+  <div id="lista-revisao"></div>
+  <button class="btn btn-cinza" onclick="mostrarTela('resultado')" style="margin-top:8px;">← Voltar ao Resultado</button>
+</div>
+
+<!-- ═══════ FLASHCARDS ═══════ -->
+<div id="tela-flash" style="display:none;">
+  <h2 style="font-size:1.1rem;margin-bottom:8px;color:var(--azul);">🃏 Flashcards</h2>
+  <p style="font-size:0.82rem;color:var(--texto-suave);margin-bottom:14px;">Toque no card para revelar a resposta</p>
+
+  <div class="flash-controles">
+    <select id="flash-tema-select" onchange="filtrarFlash()">
+      <option value="todos">Todos os temas</option>
+      <option value="bases">Bases Legais</option>
+      <option value="coffito">COFFITO / CREFITO</option>
+      <option value="parametros">Parâmetros</option>
+      <option value="deficiencias">Deficiências</option>
+      <option value="etica">Ética e Moral</option>
+      <option value="codigo">Código de Ética</option>
+    </select>
+    <button class="btn btn-cinza" style="padding:7px 14px;font-size:0.8rem;" onclick="embaralharFlash()">🔀</button>
+  </div>
+
+  <p class="flash-dica">👆 Clique no card para virar</p>
+
+  <div class="card-flash-wrap" onclick="virarFlash()">
+    <div class="card-flash" id="card-flash">
+      <div class="flash-frente">
+        <div class="flash-label">pergunta</div>
+        <div class="flash-texto" id="flash-pergunta"></div>
+      </div>
+      <div class="flash-verso">
+        <div class="flash-label" style="opacity:.7;">resposta</div>
+        <div class="flash-texto" id="flash-resposta"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flash-nav">
+    <button class="btn btn-cinza" style="padding:9px 18px;" onclick="navFlash(-1)">←</button>
+    <div class="flash-contador" id="flash-contador">1 / 30</div>
+    <button class="btn btn-verde" style="padding:9px 18px;" onclick="navFlash(1)">→</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  BANCO DE QUESTÕES
+// ════════════════════════════════════════════════════════
+const BANCO = [
+
+// ─── BASES LEGAIS ───
+{tema:'bases', enunciado:'Qual decreto-lei regulamentou a profissão de fisioterapia no Brasil e originou o Dia do Fisioterapeuta (13/10)?',
+alternativas:['Decreto-Lei nº 938 de 1969','Lei nº 6.316 de 1975','Resolução COFFITO nº 10 de 1978','Lei nº 8.856 de 1994'],
+correta:0, explicacao:'O Decreto-Lei nº 938, de 13 de outubro de 1969, regulamentou a fisioterapia no Brasil e originou o Dia do Fisioterapeuta em 13 de outubro.'},
+
+{tema:'bases', enunciado:'O Art. 3º do Decreto-Lei 938/69 define a atividade de fisioterapia como:',
+alternativas:['Atividade de apoio à equipe médica sem autonomia','Atividade privativa do fisioterapeuta: executar métodos e técnicas com finalidade de restaurar, desenvolver e conservar a capacidade física','Atividade compartilhada com terapeutas ocupacionais','Serviço auxiliar de diagnóstico clínico'],
+correta:1, explicacao:'O Art. 3º define como atividade privativa do fisioterapeuta executar métodos e técnicas fisioterapêuticas com finalidade de restaurar, desenvolver e conservar a capacidade física do paciente.'},
+
+{tema:'bases', enunciado:'Qual lei criou o COFFITO e os CREFITOs?',
+alternativas:['Lei nº 938/1969','Lei nº 6.316 de 17 de dezembro de 1975','Lei nº 8.856/1994','Resolução nº 424/2013'],
+correta:1, explicacao:'A Lei nº 6.316, de 17 de dezembro de 1975, criou o COFFITO (Conselho Federal) e os CREFITOs (Conselhos Regionais).'},
+
+{tema:'bases', enunciado:'A Resolução COFFITO nº 424/2013 estabelece:',
+alternativas:['A jornada de trabalho do fisioterapeuta','O Referencial Nacional de Procedimentos Fisioterapêuticos (RNPF)','O Código de Ética e Deontologia da Fisioterapia','O número máximo de pacientes por turno'],
+correta:2, explicacao:'A Resolução COFFITO nº 424, de 08/07/2013, estabelece o Código de Ética e Deontologia da Fisioterapia.'},
+
+{tema:'bases', enunciado:'Qual resolução fixa e estabelece o Referencial Nacional de Procedimentos Fisioterapêuticos (RNPF)?',
+alternativas:['Resolução COFFITO nº 10/1978','Resolução COFFITO nº 424/2013','Resolução COFFITO nº 428/2013','Lei nº 8.856/1994'],
+correta:2, explicacao:'A Resolução COFFITO nº 428, de 08/07/2013, fixa e estabelece o RNPF, instrumento básico para caracterizar o trabalho do fisioterapeuta no Sistema de Saúde Brasileiro.'},
+
+{tema:'bases', enunciado:'Qual a jornada máxima de trabalho semanal do fisioterapeuta, conforme a Lei nº 8.856/1994?',
+alternativas:['20 horas semanais','25 horas semanais','30 horas semanais','40 horas semanais'],
+correta:2, explicacao:'A Lei nº 8.856, de 1º de março de 1994, fixa a jornada máxima de 30 horas semanais para os fisioterapeutas.'},
+
+{tema:'bases', enunciado:'Para obtenção do registro profissional no CREFITO, qual é o pré-requisito obrigatório?',
+alternativas:['Aprovação em prova do COFFITO','Colação de grau','Estágio mínimo de 1 ano','Aprovação em concurso público'],
+correta:1, explicacao:'O pré-requisito obrigatório para registro é a colação de grau, além do diploma de graduação reconhecido pelo MEC.'},
+
+{tema:'bases', enunciado:'Na primeira inscrição no CREFITO, o profissional tem direito a:',
+alternativas:['Isenção total da anuidade','50% de desconto na anuidade e 50% nos emolumentos','25% de desconto na anuidade apenas','Parcelamento em até 12 vezes'],
+correta:1, explicacao:'Na primeira inscrição, o profissional recebe 50% de desconto na anuidade e 50% de desconto nos emolumentos. A anuidade pode ser parcelada em até 8 vezes.'},
+
+{tema:'bases', enunciado:'Segundo a Res. COFFITO nº 10/1978, o que foi estabelecido?',
+alternativas:['A jornada de trabalho do fisioterapeuta','O Código de Ética Profissional de Fisioterapia e Terapia Ocupacional','O número de pacientes por turno em UTI','A criação dos CREFITOs regionais'],
+correta:1, explicacao:'A Resolução COFFITO nº 10, de 03/07/1978, estabelece o Código de Ética Profissional de Fisioterapia e Terapia Ocupacional.'},
+
+{tema:'bases', enunciado:'O Art. 2º do Decreto-Lei 938/69 define que os fisioterapeutas diplomados são profissionais de:',
+alternativas:['Nível técnico','Nível médio','Nível superior','Especialização obrigatória'],
+correta:2, explicacao:'O Art. 2º define que os fisioterapeutas diplomados por escolas e cursos reconhecidos são profissionais de nível superior.'},
+
+{tema:'bases', enunciado:'Clínicas e consultórios que prestam serviços de fisioterapia devem estar registrados em qual órgão?',
+alternativas:['CRF (Conselho Regional de Farmácia)','CREFITO da região','Ministério da Saúde','Vigilância Sanitária exclusivamente'],
+correta:1, explicacao:'Clínicas, consultórios e empresas que prestam serviços de fisioterapia devem estar registradas no CREFITO.'},
+
+{tema:'bases', enunciado:'A Resolução COFFITO nº 444/2014 trata de:',
+alternativas:['Parâmetros Assistenciais Fisioterapêuticos nas diversas modalidades prestadas','Código de Ética e Deontologia','Criação de novas especialidades','Sigilo profissional na fisioterapia'],
+correta:0, explicacao:'A Resolução COFFITO nº 444/2014 fixa e estabelece os Parâmetros Assistenciais Fisioterapêuticos nas diversas modalidades prestadas pelo fisioterapeuta.'},
+
+// ─── COFFITO / CREFITO ───
+{tema:'coffito', enunciado:'COFFITO e CREFITO são classificados juridicamente como:',
+alternativas:['Entidades privadas sem fins lucrativos','Autarquias (órgãos da administração pública com autonomia administrativa)','Fundações públicas','Órgãos do Ministério da Saúde'],
+correta:1, explicacao:'COFFITO e CREFITOs são autarquias, ou seja, órgãos da administração pública com autonomia administrativa.'},
+
+{tema:'coffito', enunciado:'Qual é o objetivo do COFFITO e dos CREFITOs?',
+alternativas:['Regular apenas o registro profissional','Regular, orientar e fiscalizar o exercício profissional, exercendo controle ético-social e protegendo a sociedade','Representar os fisioterapeutas em negociações salariais','Promover treinamento e congressos para a categoria'],
+correta:1, explicacao:'O objetivo é regular, orientar e fiscalizar o exercício profissional de fisioterapeutas e terapeutas ocupacionais, exercendo controle ético-social e protegendo a sociedade contra o exercício ilegal.'},
+
+{tema:'coffito', enunciado:'O COFFITO funciona como:',
+alternativas:['Tribunal Superior de Ética nas demandas que envolvam fisioterapeutas','Órgão exclusivo de registro profissional','Associação dos profissionais fisioterapeutas','Sindicato da categoria'],
+correta:0, explicacao:'Uma das atribuições do COFFITO é funcionar como Tribunal Superior de Ética nas demandas que envolvam profissionais fisioterapeutas e T.O.'},
+
+{tema:'coffito', enunciado:'Qual atribuição pertence ao COFFITO (Federal) e NÃO ao CREFITO (Regional)?',
+alternativas:['Emitir carteira profissional','Arrecadar anuidades','Julgar recursos e penalidades aplicadas pelos CREFITOs','Fiscalizar o exercício profissional na região'],
+correta:2, explicacao:'O COFFITO julga recursos e penalidades aplicadas pelos CREFITOs. Os CREFITOs emitem carteiras, arrecadam anuidades e fiscalizam regionalmente.'},
+
+{tema:'coffito', enunciado:'Os CREFITOs atuam em qual âmbito?',
+alternativas:['Nacional','Internacional','Estadual (por meio de representações regionais)','Municipal'],
+correta:2, explicacao:'Os CREFITOs atuam no âmbito estadual, por meio de representações regionais, fiscalizando o exercício profissional em sua área de jurisdição.'},
+
+{tema:'coffito', enunciado:'As Associações de fisioterapia têm como papel principal:',
+alternativas:['Fiscalizar e aplicar penalidades aos profissionais','Representação profissional, defendendo os interesses do profissional e da profissão, promovendo treinamentos e congressos','Registrar profissionais e emitir carteiras','Arrecadar anuidades obrigatórias'],
+correta:1, explicacao:'As Associações são entidades de representação profissional, sem fins lucrativos, que defendem os interesses do profissional e da profissão, promovendo treinamento, cursos, congressos, entre outros.'},
+
+{tema:'coffito', enunciado:'Os Sindicatos dos fisioterapeutas têm como função principal:',
+alternativas:['Fiscalizar eticamente a profissão','Defender os interesses trabalhistas, atuando em negociações salariais e convenções coletivas','Emitir registros profissionais','Regular o exercício da profissão'],
+correta:1, explicacao:'Os Sindicatos defendem os interesses trabalhistas dos fisioterapeutas, atuam em negociações salariais, convenções coletivas e oferecem assistência jurídica e profissional.'},
+
+{tema:'coffito', enunciado:'A ABF (Associação Brasileira de Fisioterapeutas) surgiu na Década de:',
+alternativas:['1940','1950','1960','1970'],
+correta:2, explicacao:'Na Década de 60 começam os movimentos associativos com a criação da ABF (Associação Brasileira de Fisioterapeutas), filiada à WCPT, para amparo técnico-científico e sócio-cultural.'},
+
+{tema:'coffito', enunciado:'Quais foram os CREFITOs criados em 2023?',
+alternativas:['CREFITO 15 e 16','CREFITO 17 e 18','CREFITO 19 e 20','CREFITO 21 e 22'],
+correta:2, explicacao:'O CREFITO 19 e o CREFITO 20 foram criados em 2023. Os CREFITOs 17 e 18 foram criados em 2017.'},
+
+{tema:'coffito', enunciado:'O COFFITO supervisiona a fiscalização do exercício profissional em:',
+alternativas:['Apenas no Distrito Federal','Nos estados com maior concentração de profissionais','Em todo o território nacional','Nos estados sem CREFITO constituído'],
+correta:2, explicacao:'Uma das atribuições do COFFITO é supervisionar a fiscalização do exercício profissional em todo o território nacional.'},
+
+// ─── PARÂMETROS ASSISTENCIAIS ───
+{tema:'parametros', enunciado:'No atendimento hospitalar em enfermaria (leito comum), com pacientes estáveis e independentes, qual o número máximo de pacientes por turno de 6 horas?',
+alternativas:['6 pacientes','8 pacientes','10 pacientes','12 pacientes'],
+correta:2, explicacao:'Na modalidade Hospitalar – Enfermaria (leito comum) com pacientes estáveis e independentes, são até 10 pacientes por turno de 6 horas.'},
+
+{tema:'parametros', enunciado:'Na UTI e Semi-Intensiva (pacientes graves ou com risco de instabilidade), qual o número de pacientes por turno de 6 horas?',
+alternativas:['Até 4 pacientes','Entre 6 e 10 pacientes','Até 8 pacientes','Entre 10 e 12 pacientes'],
+correta:1, explicacao:'Na UTI, Semi-Intensiva, Urgência e Emergência (pacientes graves ou com risco de instabilidade), o parâmetro é entre 6 e 10 pacientes por turno de 6 horas.'},
+
+{tema:'parametros', enunciado:'No atendimento ambulatorial geral (eletivo), qual o número máximo de pacientes por turno de 6 horas?',
+alternativas:['8 pacientes','10 pacientes','12 pacientes','15 pacientes'],
+correta:2, explicacao:'No ambulatorial geral (atendimento eletivo), são até 12 pacientes por turno de 6 horas.'},
+
+{tema:'parametros', enunciado:'No ambulatorial diferenciado/especializado (neurológicos, queimados, oncológicos, pediátricos), quantos pacientes por turno de 6 horas?',
+alternativas:['Até 6 pacientes','Cerca de 8 pacientes','Até 10 pacientes','Até 12 pacientes'],
+correta:1, explicacao:'No ambulatorial diferenciado/especializado, são cerca de 8 pacientes por turno de 6 horas, devido à maior complexidade.'},
+
+{tema:'parametros', enunciado:'Pacientes aptos para atendimento em grupo, segundo a Res. 444/2014, são aqueles com:',
+alternativas:['Quadros agudos e instáveis','Quadros crônicos, estabilizados, em condições físicas satisfatórias, que concordem com a modalidade','Apenas pacientes pediátricos','Pacientes em fase de alta hospitalar'],
+correta:1, explicacao:'Para atendimento em grupo, os clientes/pacientes aptos são aqueles com quadros crônicos, estabilizados, em condições físicas satisfatórias e que concordem em participar desta modalidade de atendimento.'},
+
+{tema:'parametros', enunciado:'Na enfermaria especializada (pacientes com dependência parcial e maior complexidade), o parâmetro é:',
+alternativas:['Até 6 pacientes por turno de 6h','Entre 8 e 10 pacientes por turno de 6h','Até 12 pacientes por turno de 6h','Entre 4 e 6 pacientes por turno de 6h'],
+correta:1, explicacao:'Na enfermaria especializada, com pacientes com dependência parcial e maior complexidade, o parâmetro é entre 8 e 10 pacientes por turno de 6 horas.'},
+
+{tema:'parametros', enunciado:'O atendimento domiciliar (home care) na fisioterapia:',
+alternativas:['Segue os mesmos parâmetros do ambulatorial geral','Tem parâmetros definidos conforme o nível de complexidade e necessidade do caso','É proibido pela legislação vigente','Não possui regulamentação específica do COFFITO'],
+correta:1, explicacao:'No atendimento domiciliar (home care), os parâmetros são definidos conforme o nível de complexidade e necessidade do caso.'},
+
+{tema:'parametros', enunciado:'A Fisioterapia aquática em modalidade ambulatorial:',
+alternativas:['Segue o mesmo parâmetro do ambulatorial geral (12 pacientes)','Tem quantidade de pacientes que varia conforme o nível de complexidade','Tem parâmetro fixo de 6 pacientes por turno','Não possui parâmetros definidos'],
+correta:1, explicacao:'Na fisioterapia aquática ambulatorial, a quantidade de pacientes varia conforme o nível de complexidade.'},
+
+// ─── DEFICIÊNCIAS ───
+{tema:'deficiencias', enunciado:'Segundo a definição legal, pessoa com deficiência é aquela que apresenta impedimentos de longo prazo de natureza:',
+alternativas:['Apenas física ou mental','Física, mental, intelectual ou sensorial que, em interação com barreiras, pode obstruir sua participação plena e efetiva na sociedade','Apenas física ou sensorial, causada por acidente','Qualquer limitação temporária ou permanente'],
+correta:1, explicacao:'Pessoa com deficiência é aquela que apresenta impedimentos de longo prazo de natureza física, mental, intelectual ou sensorial que, em interação com barreiras, podem obstruir sua participação plena e efetiva na sociedade em igualdade de condições.'},
+
+{tema:'deficiencias', enunciado:'Qual é a terminologia CORRETA reconhecida internacionalmente pela Convenção sobre os Direitos das Pessoas com Deficiência da ONU?',
+alternativas:['Portador de deficiência','Deficiente','Pessoa com deficiência','Pessoa especial'],
+correta:2, explicacao:'O termo correto reconhecido internacionalmente pela Convenção sobre os Direitos das Pessoas com Deficiência da ONU é "Pessoa com deficiência". Usar a linguagem correta é promover respeito e inclusão.'},
+
+{tema:'deficiencias', enunciado:'Capacitismo é definido como:',
+alternativas:['Uma política de inclusão para pessoas com deficiência','O preconceito ou discriminação contra pessoas com deficiência, tratando-as como inferiores, incapazes ou menos valiosas','Uma modalidade de terapia física adaptada','O conjunto de adaptações para acessibilidade'],
+correta:1, explicacao:'Capacitismo é o preconceito ou discriminação contra pessoas com deficiência, tratando-as como inferiores, incapazes ou menos valiosas.'},
+
+{tema:'deficiencias', enunciado:'Qual das situações abaixo é um exemplo de CAPACITISMO ATITUDINAL?',
+alternativas:['Ausência de rampas de acessibilidade','Infantilizar ou ter pena excessiva da pessoa com deficiência','Uso de termos ofensivos','Ausência de políticas institucionais inclusivas'],
+correta:1, explicacao:'O capacitismo atitudinal é caracterizado pela infantilização ou pena excessiva em relação à pessoa com deficiência. A falta de rampas é capacitismo físico; termos ofensivos são capacitismo linguístico; ausência de políticas é capacitismo institucional.'},
+
+{tema:'deficiencias', enunciado:'Qual a diferença entre INCLUSÃO e INTEGRAÇÃO?',
+alternativas:['São sinônimos que significam participação plena','Na inclusão a sociedade se adapta para todos; na integração a pessoa precisa se adaptar ao ambiente','Na integração há participação plena; na inclusão há adaptação parcial','Exclusão e integração significam a mesma coisa'],
+correta:1, explicacao:'Na INCLUSÃO, a sociedade se adapta para todos. Na INTEGRAÇÃO, a pessoa com deficiência precisa se adaptar ao ambiente. Na SEGREGAÇÃO há grupos separados da sociedade. Na EXCLUSÃO há ausência de participação social.'},
+
+{tema:'deficiencias', enunciado:'O Transtorno do Espectro Autista (TEA) é classificado como um tipo de:',
+alternativas:['Deficiência física','Deficiência auditiva','Deficiência intelectual','Deficiência intelectual (está entre os principais tipos de deficiência listados)'],
+correta:3, explicacao:'O TEA está listado entre os principais tipos de deficiência, junto com deficiência física, visual, auditiva e intelectual.'},
+
+{tema:'deficiencias', enunciado:'O objetivo da INCLUSÃO é:',
+alternativas:['Criar grupos especiais separados da sociedade','Combater a exclusão e promover a cidadania, garantindo igualdade de oportunidades e participação social','Integrar as pessoas ao ambiente já existente sem mudanças','Focar apenas na acessibilidade física'],
+correta:1, explicacao:'A inclusão tem como objetivo combater a exclusão e promover a cidadania, garantindo igualdade de oportunidades, participação social, acesso à educação, trabalho e lazer, e respeito à diversidade humana.'},
+
+{tema:'deficiencias', enunciado:'Qual das seguintes NÃO é uma origem possível de deficiência?',
+alternativas:['Fatores genéticos','Complicações no parto','Traumas e lesões','Contato com pessoa com deficiência'],
+correta:3, explicacao:'A deficiência pode ter origem em fatores genéticos, problemas durante a gestação, complicações no parto, doenças crônicas, transtornos psiquiátricos, desnutrição, uso de drogas, traumas e lesões. Contato com pessoa com deficiência não é uma causa.'},
+
+// ─── ÉTICA E MORAL ───
+{tema:'etica', enunciado:'A palavra "ética" vem do grego "ethos" e significa:',
+alternativas:['Comportamento social','Aquilo que pertence ao caráter','Conjunto de leis e normas','Regra de convivência'],
+correta:1, explicacao:'A palavra ética vem do grego "ethos" e significa aquilo que pertence ao caráter. É o estudo ou reflexão, científica ou filosófica, sobre os costumes ou ações humanas.'},
+
+{tema:'etica', enunciado:'Qual a principal diferença entre ÉTICA e MORAL?',
+alternativas:['São conceitos idênticos sem distinção prática','A Ética é a teoria (permanente, universal, o princípio); a Moral é a prática (temporal, cultural, a conduta)','A Moral é superior à Ética na hierarquia normativa','A Ética é temporal e a Moral é permanente'],
+correta:1, explicacao:'A Ética é a teoria – permanente, universal, o princípio, a regra e reflexão crítica. A Moral é a prática – temporal, cultural, a conduta e a regra da conduta na ação cotidiana. A Ética analisa e questiona os valores; a Moral os coloca em prática.'},
+
+{tema:'etica', enunciado:'Segundo a filosofia, a Ética teria surgido com qual filósofo, pois exige maior grau de cultura?',
+alternativas:['Platão','Sócrates','Kant','Marx'],
+correta:1, explicacao:'A ética teria surgido com Sócrates, pois exige maior grau de cultura. A moral sempre existiu (consciência moral) desde as primeiras tribos nas sociedades primitivas.'},
+
+{tema:'etica', enunciado:'Platão (430-347 a.C.) em relação à ética defendia:',
+alternativas:['Que a liberdade é condicionada pelas condições sociais e econômicas','Que a lei natural orienta para o bem e a existência de Deus','O reforço do paradigma do Bem para nortear as ações morais','Que a razão cria leis morais objetivas válidas para todos'],
+correta:2, explicacao:'Platão reforçava o paradigma do Bem para nortear as ações morais, com a ideia de que "O homem é bom enquanto bom cidadão", com enfoque na razão.'},
+
+{tema:'etica', enunciado:'Kant (1724-1804) em relação à ética defende que:',
+alternativas:['A liberdade é condicionada pelas condições sociais e econômicas','A razão de cada pessoa diz que esta aja de maneira virtuosa','A razão cria leis morais objetivas (válidas para todos) e uma vida moral possível se a razão estabelecer como devemos nos conduzir','"O homem é bom enquanto bom cidadão"'],
+correta:2, explicacao:'Kant defende que uma vida moral é possível se a razão estabelecer de forma racional como devemos nos conduzir. A razão cria leis morais objetivas, válidas para todos.'},
+
+{tema:'etica', enunciado:'Sócrates (470-399 a.C.) é conhecido pela frase:',
+alternativas:['"O homem é bom enquanto bom cidadão"','"Conhece-te a ti mesmo"','"A razão cria leis morais objetivas"','"A liberdade está nas condições sociais"'],
+correta:1, explicacao:'Sócrates buscava fundamentar a moral na natureza humana, defendia o autoconhecimento e o autodomínio, sendo famoso pela frase "Conhece-te a ti mesmo".'},
+
+{tema:'etica', enunciado:'Valores, segundo o conceito estudado, servem ao indivíduo para:',
+alternativas:['Estabelecer hierarquia entre profissionais','Orientar seus comportamentos e ações, motivar, impulsionar a ação e dar significado aos comportamentos','Definir o que é moralmente errado na sociedade','Substituir as normas do Código de Ética'],
+correta:1, explicacao:'Valores é o conjunto de características de uma pessoa que determinam a forma como se comporta e interage com os outros e o meio ambiente. Servem para orientar comportamentos e ações, motivar, impulsionar a ação, dar significado e legitimidade aos comportamentos.'},
+
+{tema:'etica', enunciado:'A moral tem origem no latim "mores", que significa:',
+alternativas:['Caráter pessoal','Costumes ou conjunto de tradições e doutrina do bem','Princípio universal','Norma jurídica'],
+correta:1, explicacao:'A moral tem origem no latim "mores", que significa costumes ou conjunto de tradições e doutrina do bem. Está na decisão de como agir frente a uma situação no foro íntimo de cada um.'},
+
+{tema:'etica', enunciado:'Por que a bigamia é usada como exemplo no estudo de Ética e Moral?',
+alternativas:['Para mostrar que a ética varia por região geográfica','Para exemplificar que o que é moral em alguns países não é moral em outros, demonstrando a relatividade cultural da moral','Para demonstrar que a bigamia é ética em qualquer contexto','Para ilustrar conflito entre ética e legislação'],
+correta:1, explicacao:'A bigamia é usada como exemplo de relatividade cultural da moral: em países muçulmanos é honroso ter mais de uma esposa, já em outros pregam a monogamia. Mostra que o que é moral em alguns países não é moral em outros.'},
+
+{tema:'etica', enunciado:'A Ética na Fisioterapia significa que o fisioterapeuta deve:',
+alternativas:['Seguir apenas as normas do hospital onde trabalha','Agir com responsabilidade, respeito, honestidade e compromisso com a saúde e o bem-estar do paciente','Priorizar os interesses financeiros da clínica','Aplicar técnicas exclusivamente baseadas em tradição'],
+correta:1, explicacao:'A Ética na Fisioterapia exige que o fisioterapeuta aja com responsabilidade, respeito, honestidade e compromisso com a saúde e o bem-estar do paciente. A ética profissional é fundamental para garantir qualidade e segurança no atendimento.'},
+
+// ─── CÓDIGO DE ÉTICA ───
+{tema:'codigo', enunciado:'Quais são os 4 princípios bioéticos fundamentais no Código de Ética da Fisioterapia?',
+alternativas:['Honestidade, competência, respeito e lealdade','Beneficência, não maleficência, autonomia e justiça','Sigilo, responsabilidade, transparência e ética','Registro, capacitação, atualização e compromisso'],
+correta:1, explicacao:'Os 4 princípios bioéticos fundamentais são: Beneficência (promover o bem do paciente), Não maleficência (evitar causar danos), Autonomia (respeitar as decisões do paciente) e Justiça (garantir tratamento justo e igualitário).'},
+
+{tema:'codigo', enunciado:'É PROIBIDO ao fisioterapeuta:',
+alternativas:['Encaminhar o paciente a outro profissional quando necessário','Realizar diagnóstico fisioterapêutico','Negar assistência em situações de urgência','Conceder alta ao paciente'],
+correta:2, explicacao:'É expressamente proibido ao fisioterapeuta negar assistência em situações de urgência. Outras proibições incluem: realizar tratamentos sem consentimento, usar a profissão para mercantilização, praticar assédio, entre outras.'},
+
+{tema:'codigo', enunciado:'O fisioterapeuta tem o dever de preservar:',
+alternativas:['Apenas o sigilo de dados financeiros do paciente','O sigilo profissional sobre informações obtidas no exercício da profissão','Apenas informações pedidas pelo paciente','O sigilo apenas quando solicitado formalmente'],
+correta:1, explicacao:'Um dos deveres fundamentais do fisioterapeuta é preservar o sigilo profissional. A quebra de sigilo sem justa causa (demanda judicial ou previsão legal) é proibida pelo Art. 32 do Código de Ética.'},
+
+{tema:'codigo', enunciado:'Segundo o Capítulo III do Código de Ética, é PROIBIDO ao fisioterapeuta:',
+alternativas:['Realizar diagnóstico fisioterapêutico','Divulgar informações ou imagens do paciente sem autorização','Conceder alta ao paciente','Usar métodos reconhecidos pelo COFFITO'],
+correta:1, explicacao:'É proibido ao fisioterapeuta divulgar informações ou imagens do paciente sem autorização, bem como prometer terapia infalível, secreta ou descoberta, e abandonar o paciente sem garantir continuidade do cuidado.'},
+
+{tema:'codigo', enunciado:'O Teleatendimento (Res. 516/2020) regulamenta três modalidades. Qual das alternativas abaixo NÃO é uma delas?',
+alternativas:['Teleconsulta','Telemonitoramento','Teleconsultoria','Telerreabilitação exclusivamente presencial'],
+correta:3, explicacao:'As modalidades regulamentadas pela Res. 516/2020 são: Teleconsulta (consulta clínica à distância), Telemonitoramento (acompanhamento à distância de paciente avaliado presencialmente) e Teleconsultoria (comunicação entre profissionais de saúde para esclarecimento de dúvidas). Telerreabilitação exclusivamente presencial não faz sentido.'},
+
+{tema:'codigo', enunciado:'Na divulgação de imagens de pacientes, o que é PERMITIDO segundo a Res. 532/2023?',
+alternativas:['Divulgar imagens sem restrições se o paciente for menor de 18 anos','Divulgar com autorização formal do paciente (TCLE), identificação do profissional e respeitando a dignidade do paciente e da profissão','Divulgar para fins educacionais sem necessidade de autorização','Divulgar resultados garantidos como forma de marketing'],
+correta:1, explicacao:'É permitido divulgar imagens com autorização formal do paciente (TCLE), com identificação do profissional (nome e nº de registro) e respeitando a dignidade do paciente e da profissão. São proibidos sensacionalismo, promessa de resultados garantidos e concorrência desleal.'},
+
+{tema:'codigo', enunciado:'Segundo o Art. 30, é proibido ao fisioterapeuta utilizar expressões genéricas como "terapeuta corporal, terapeutão, quiropaxista, osteopata, pilatista" porque:',
+alternativas:['São termos desrespeitosos com a categoria','Isso substitui a titulação de fisioterapeuta por expressões não regulamentadas pelo COFFITO','São termos reservados aos médicos','O COFFITO não reconhece essas atividades como fisioterapia'],
+correta:1, explicacao:'O Art. 30, inciso IV proíbe substituir a titulação de fisioterapeuta por expressões genéricas como terapeuta corporal, terapeutão, quiropaxista, osteopata, pilatista, bobatiano, esteticista, entre outros.'},
+
+{tema:'codigo', enunciado:'O Art. 30, inciso XII proíbe ao fisioterapeuta:',
+alternativas:['Trabalhar em equipe multidisciplinar','Realizar pesquisas científicas','Transmitir conhecimento ou ensinar procedimentos próprios da Fisioterapia a quem não seja acadêmico ou profissional da área','Divulgar seus serviços com identificação profissional'],
+correta:2, explicacao:'O Art. 30, inciso XII proíbe ao fisioterapeuta transmitir conhecimento ou ensinar procedimentos próprios da Fisioterapia a quem não seja acadêmico ou profissional da área.'},
+
+{tema:'codigo', enunciado:'Sobre a relação do fisioterapeuta com colegas (Cap. IV), é PROIBIDO:',
+alternativas:['Incentivar a capacitação dos profissionais sob sua supervisão','Assumir responsabilidade pelos próprios erros','Concorrer de forma desleal com colegas e desviar pacientes de colegas ou instituições','Trabalhar de forma harmoniosa com a equipe multidisciplinar'],
+correta:2, explicacao:'É proibido ao fisioterapeuta concorrer de forma desleal com colegas, captar pacientes de forma antiética, desviar pacientes de colegas ou instituições e atender paciente em tratamento com outro fisioterapeuta sem justificativa ética adequada.'},
+
+{tema:'codigo', enunciado:'O Art. 33 do Código de Ética determina que o fisioterapeuta perante as entidades de classe deve:',
+alternativas:['Abster-se de participar de atividades políticas profissionais','Participar da determinação das políticas de saúde, votando e sendo votado, colaborando com as entidades de classe','Apenas cumprir as normas sem participação ativa','Participar somente se convidado pela entidade'],
+correta:1, explicacao:'O Art. 33 determina que o fisioterapeuta, por sua atuação nos órgãos de representação política e profissional, deve participar da determinação das políticas de saúde, votando e sendo votado, além de colaborar com as entidades de classe.'},
+
+{tema:'codigo', enunciado:'Uma das responsabilidades fundamentais do fisioterapeuta é aceitar apenas atividades para as quais:',
+alternativas:['Tenha autorização do diretor clínico','Tenha capacitação adequada','Sejam remuneradas adequadamente','Estejam listadas no RNPF'],
+correta:1, explicacao:'Uma das responsabilidades fundamentais é aceitar apenas atividades para as quais tenha capacitação adequada, além de atualizar constantemente seus conhecimentos científicos e proteger os pacientes contra imperícia, negligência e imprudência.'},
+
+{tema:'codigo', enunciado:'O Capítulo VI do Código de Ética trata do Sigilo Profissional. A "justa causa" para quebra de sigilo é definida como:',
+alternativas:['Quando o paciente autoriza verbalmente','Demanda judicial ou previsão legal que determine a divulgação','Quando há interesse científico ou educacional','Quando o responsável legal do paciente solicita'],
+correta:1, explicacao:'O § Único do Art. 32 define "justa causa" como demanda judicial ou previsão legal que determine a divulgação de informações sigilosas.'},
+
+];
+
+// ════════════════════════════════════════════════════════
+//  FLASHCARDS
+// ════════════════════════════════════════════════════════
+const FLASHCARDS_ALL = [
+  {tema:'bases', p:'Qual Decreto-Lei regulamentou a fisioterapia no Brasil em 1969?', r:'Decreto-Lei nº 938, de 13 de outubro de 1969. Originou o Dia do Fisioterapeuta (13/10).'},
+  {tema:'bases', p:'Qual lei criou o COFFITO e os CREFITOs?', r:'Lei nº 6.316, de 17 de dezembro de 1975.'},
+  {tema:'bases', p:'O que estabelece a Res. COFFITO nº 424/2013?', r:'O Código de Ética e Deontologia da Fisioterapia.'},
+  {tema:'bases', p:'O que estabelece a Res. COFFITO nº 428/2013?', r:'O Referencial Nacional de Procedimentos Fisioterapêuticos (RNPF).'},
+  {tema:'bases', p:'Qual a jornada máxima semanal do fisioterapeuta?', r:'30 horas semanais (Lei nº 8.856/1994).'},
+  {tema:'bases', p:'Qual é o pré-requisito obrigatório para registro no CREFITO?', r:'Colação de grau + diploma de graduação reconhecido pelo MEC.'},
+  {tema:'bases', p:'Quais são os descontos na primeira inscrição do CREFITO?', r:'50% de desconto na anuidade e 50% nos emolumentos. Anuidade parcelável em até 8 vezes.'},
+  {tema:'coffito', p:'O que são o COFFITO e os CREFITOs juridicamente?', r:'Autarquias – órgãos da administração pública com autonomia administrativa.'},
+  {tema:'coffito', p:'Qual o objetivo do COFFITO e CREFITOs?', r:'Regular, orientar e fiscalizar o exercício profissional, exercendo controle ético-social e protegendo a sociedade contra o exercício ilegal.'},
+  {tema:'coffito', p:'O COFFITO funciona como qual tipo de tribunal?', r:'Tribunal Superior de Ética nas demandas que envolvam fisioterapeutas e T.O.'},
+  {tema:'coffito', p:'Qual a diferença de âmbito entre COFFITO e CREFITO?', r:'COFFITO = âmbito nacional (federal). CREFITOs = âmbito estadual (regional).'},
+  {tema:'coffito', p:'Quando foram criados os CREFITOs 17, 18, 19 e 20?', r:'CREFITOs 17 e 18 → 2017. CREFITOs 19 e 20 → 2023.'},
+  {tema:'parametros', p:'Hospitalar leito comum: quantos pacientes por turno de 6h?', r:'Até 10 pacientes (pacientes estáveis e independentes).'},
+  {tema:'parametros', p:'UTI / Semi-Intensiva / Urgência: quantos pacientes por turno de 6h?', r:'Entre 6 e 10 pacientes (pacientes graves ou com risco de instabilidade).'},
+  {tema:'parametros', p:'Ambulatorial geral: quantos pacientes por turno de 6h?', r:'Até 12 pacientes (atendimento eletivo).'},
+  {tema:'parametros', p:'Ambulatorial diferenciado/especializado: quantos pacientes por turno de 6h?', r:'Cerca de 8 pacientes (neurológicos, queimados, oncológicos, pediátricos, geriátricos).'},
+  {tema:'parametros', p:'Enfermaria especializada: quantos pacientes por turno de 6h?', r:'Entre 8 e 10 pacientes (dependência parcial e maior complexidade).'},
+  {tema:'deficiencias', p:'Qual a terminologia correta reconhecida pela ONU?', r:'"Pessoa com deficiência" – reconhecida pela Convenção sobre os Direitos das Pessoas com Deficiência da ONU.'},
+  {tema:'deficiencias', p:'O que é capacitismo?', r:'Preconceito ou discriminação contra pessoas com deficiência, tratando-as como inferiores, incapazes ou menos valiosas.'},
+  {tema:'deficiencias', p:'Quais são os 4 tipos de capacitismo?', r:'Físico (falta de acessibilidade), Atitudinal (infantilização/pena), Linguístico (termos ofensivos), Institucional (ausência de políticas inclusivas).'},
+  {tema:'deficiencias', p:'Diferença entre Inclusão e Integração:', r:'Inclusão = a sociedade se adapta para todos. Integração = a pessoa precisa se adaptar ao ambiente.'},
+  {tema:'deficiencias', p:'Quais são os impedimentos de longo prazo que caracterizam deficiência?', r:'Física, mental, intelectual ou sensorial.'},
+  {tema:'etica', p:'Da onde vem a palavra "ética" e o que significa?', r:'Do grego "ethos" = aquilo que pertence ao caráter. É o estudo/reflexão sobre costumes e ações humanas.'},
+  {tema:'etica', p:'Qual a diferença entre Ética e Moral?', r:'Ética: teoria, permanente, universal, princípio, reflexão crítica. Moral: prática, temporal, cultural, conduta, ação cotidiana.'},
+  {tema:'etica', p:'Com qual filósofo a Ética teria surgido?', r:'Sócrates (470-399 a.C.) – "Conhece-te a ti mesmo". A moral sempre existiu; a ética exige maior grau de cultura.'},
+  {tema:'etica', p:'O que Kant defende sobre ética?', r:'A razão cria leis morais objetivas (válidas para todos). Uma vida moral é possível se a razão estabelecer como devemos nos conduzir.'},
+  {tema:'codigo', p:'Quais são os 4 princípios bioéticos fundamentais?', r:'Beneficência (promover bem), Não maleficência (evitar danos), Autonomia (respeitar decisões do paciente), Justiça (tratamento justo e igualitário).'},
+  {tema:'codigo', p:'O que é "justa causa" para quebra de sigilo profissional?', r:'Demanda judicial ou previsão legal que determine a divulgação (Art. 32, § Único).'},
+  {tema:'codigo', p:'O que regula a Res. COFFITO 516/2020?', r:'O Teleatendimento: Teleconsulta, Telemonitoramento e Teleconsultoria.'},
+  {tema:'codigo', p:'Cite 3 proibições do Art. 30 ao fisioterapeuta:', r:'1) Negar assistência em urgência. 2) Usar titulações não reconhecidas. 3) Substituir título por expressões genéricas (terapeuta corporal, etc.). 4) Divulgar imagens sem autorização.'},
+];
+
+// ════════════════════════════════════════════════════════
+//  ESTADO
+// ════════════════════════════════════════════════════════
+let temasSelecionados = ['bases','coffito','parametros','deficiencias','etica','codigo'];
+let questoesSimulado = [];
+let qAtual = 0;
+let respostas = []; // {respondeu, correta, escolhida, corretaIdx}
+let certas = 0, erradas = 0;
+let cronometroInterval = null;
+let tempoRestante = 0;
+let flashcardsFiltrados = [...FLASHCARDS_ALL];
+let flashAtual = 0;
+let telaAtual = 'inicio';
+
+// ════════════════════════════════════════════════════════
+//  NAVEGAÇÃO
+// ════════════════════════════════════════════════════════
+const TELAS = ['inicio','simulado-config','simulado','resultado','revisao','flash'];
+function mostrarTela(nome) {
+  telaAtual = nome;
+  TELAS.forEach(t => {
+    const el = document.getElementById('tela-'+t);
+    if(el) el.style.display = 'none';
+  });
+  const alvo = document.getElementById('tela-'+nome);
+  if(alvo) alvo.style.display = 'block';
+  // nav tabs
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('ativo'));
+  if(nome==='inicio') document.querySelectorAll('nav button')[0].classList.add('ativo');
+  if(nome==='simulado-config'||nome==='simulado') document.querySelectorAll('nav button')[1].classList.add('ativo');
+  if(nome==='flash') document.querySelectorAll('nav button')[2].classList.add('ativo');
+  if(nome==='revisao') document.querySelectorAll('nav button')[3].classList.add('ativo');
+  if(nome==='resultado') document.querySelectorAll('nav button')[1].classList.add('ativo');
+  // flash
+  if(nome==='flash') { filtrarFlash(); renderFlash(); }
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════
+//  TOGGLE TEMA
+// ════════════════════════════════════════════════════════
+function toggleTema(el, tema) {
+  if(temasSelecionados.includes(tema)) {
+    if(temasSelecionados.length === 1) return; // mínimo 1
+    temasSelecionados = temasSelecionados.filter(t=>t!==tema);
+    el.classList.remove('selecionado');
+    el.querySelector('.check-tema').textContent = '';
+  } else {
+    temasSelecionados.push(tema);
+    el.classList.add('selecionado');
+    el.querySelector('.check-tema').textContent = '✓';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  INICIAR SIMULADO
+// ════════════════════════════════════════════════════════
+function iniciarSimulado() {
+  const qtdSelect = document.getElementById('qtd-select').value;
+  const modo = document.getElementById('modo-select').value;
+
+  // Filtrar por temas
+  let pool = BANCO.filter(q => temasSelecionados.includes(q.tema));
+  // Embaralhar
+  pool = embaralhar([...pool]);
+  // Limitar
+  if(qtdSelect !== 'todas') {
+    const n = parseInt(qtdSelect);
+    pool = pool.slice(0, Math.min(n, pool.length));
+  }
+  questoesSimulado = pool;
+  qAtual = 0;
+  respostas = questoesSimulado.map(() => ({respondeu:false, correta:false, escolhida:-1}));
+  certas = 0; erradas = 0;
+
+  // cronômetro
+  pararCronometro();
+  const sem = document.getElementById('sem-cronometro');
+  const disp = document.getElementById('cronometro-display');
+  if(modo === 'cronometro') {
+    tempoRestante = 60; // 60s por questão
+    sem.classList.add('hidden');
+    disp.classList.remove('hidden');
+    iniciarCronometro(60, true);
+  } else if(modo === 'prova') {
+    tempoRestante = questoesSimulado.length * 120; // 2min/q total
+    sem.classList.add('hidden');
+    disp.classList.remove('hidden');
+    iniciarCronometro(tempoRestante, false);
+  } else {
+    sem.classList.remove('hidden');
+    disp.classList.add('hidden');
+  }
+
+  mostrarTela('simulado');
+  renderQuestao();
+}
+
+function embaralhar(arr) {
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+// ════════════════════════════════════════════════════════
+//  CRONÔMETRO
+// ════════════════════════════════════════════════════════
+function iniciarCronometro(segundos, porQuestao) {
+  tempoRestante = segundos;
+  atualizarDisplay();
+  cronometroInterval = setInterval(() => {
+    tempoRestante--;
+    atualizarDisplay();
+    if(tempoRestante <= 0) {
+      pararCronometro();
+      if(porQuestao) {
+        // passa para próxima automaticamente
+        if(qAtual < questoesSimulado.length - 1) {
+          irQuestao(1);
+          iniciarCronometro(60, true);
+        } else {
+          finalizarSimulado();
+        }
+      } else {
+        finalizarSimulado();
+      }
+    }
+  }, 1000);
+}
+
+function pararCronometro() {
+  if(cronometroInterval) { clearInterval(cronometroInterval); cronometroInterval = null; }
+}
+
+function atualizarDisplay() {
+  const el = document.getElementById('tempo-val');
+  const disp = document.getElementById('cronometro-display');
+  if(!el) return;
+  const m = Math.floor(tempoRestante/60).toString().padStart(2,'0');
+  const s = (tempoRestante%60).toString().padStart(2,'0');
+  el.textContent = m+':'+s;
+  if(tempoRestante <= 10) disp.classList.add('urgente');
+  else disp.classList.remove('urgente');
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER QUESTÃO
+// ════════════════════════════════════════════════════════
+const CORES_TEMAS = {
+  bases: {bg:'#e8f0fa',cor:'#1e4a7c',label:'⚖️ Bases Legais'},
+  coffito: {bg:'#f0f0ff',cor:'#5b4fcf',label:'🏛️ COFFITO/CREFITO'},
+  parametros: {bg:'#fff0e8',cor:'#a0522d',label:'👥 Parâmetros'},
+  deficiencias: {bg:'#ffe8f0',cor:'#c0396b',label:'♿ Deficiências'},
+  etica: {bg:'#e8faf0',cor:'#1a6b4a',label:'🧭 Ética e Moral'},
+  codigo: {bg:'#fff8e1',cor:'#a0700a',label:'📜 Código de Ética'},
+};
+
+function renderQuestao() {
+  const q = questoesSimulado[qAtual];
+  const total = questoesSimulado.length;
+  const resp = respostas[qAtual];
+  const tema = CORES_TEMAS[q.tema];
+
+  // progresso
+  document.getElementById('progresso-fill').style.width = ((qAtual+1)/total*100)+'%';
+  document.getElementById('info-num').textContent = `Questão ${qAtual+1} de ${total}`;
+
+  const badge = document.getElementById('badge-tema-atual');
+  badge.textContent = tema.label;
+  badge.style.background = tema.bg;
+  badge.style.color = tema.cor;
+
+  document.getElementById('enunciado').textContent = q.enunciado;
+
+  // alternativas
+  const letras = ['A','B','C','D'];
+  const altDiv = document.getElementById('alternativas');
+  altDiv.innerHTML = '';
+  q.alternativas.forEach((alt,i) => {
+    const d = document.createElement('div');
+    d.className = 'alt' + (resp.respondeu ? ' desabilitada' : '');
+    if(resp.respondeu) {
+      if(i === q.correta) d.classList.add('correta');
+      else if(i === resp.escolhida) d.classList.add('errada');
+    }
+    d.innerHTML = `<div class="letra">${letras[i]}</div><div>${alt}</div>`;
+    if(!resp.respondeu) d.onclick = () => responder(i);
+    altDiv.appendChild(d);
+  });
+
+  // feedback
+  const fb = document.getElementById('feedback');
+  if(resp.respondeu) {
+    fb.style.display = 'block';
+    fb.className = 'feedback ' + (resp.correta ? 'correto' : 'errado');
+    fb.innerHTML = `<strong>${resp.correta ? '✅ Correto!' : '❌ Incorreto!'}</strong><p>${q.explicacao}</p>`;
+  } else {
+    fb.style.display = 'none';
+  }
+
+  // hint
+  const hint = document.getElementById('hint-responda');
+  hint.textContent = resp.respondeu ? '' : 'Selecione uma alternativa';
+
+  // botões nav
+  document.getElementById('btn-anterior').style.visibility = qAtual > 0 ? 'visible' : 'hidden';
+  const btnProx = document.getElementById('btn-proxima');
+  if(qAtual === total - 1 && resp.respondeu) {
+    btnProx.textContent = 'Ver Resultado →';
+    btnProx.onclick = finalizarSimulado;
+  } else {
+    btnProx.textContent = 'Próxima →';
+    btnProx.onclick = () => irQuestao(1);
+  }
+  btnProx.disabled = !resp.respondeu;
+  btnProx.style.opacity = resp.respondeu ? '1' : '0.4';
+
+  // placar
+  document.getElementById('placar-live').innerHTML = `✅ ${certas} &nbsp; ❌ ${erradas}`;
+}
+
+function responder(idx) {
+  const q = questoesSimulado[qAtual];
+  const resp = respostas[qAtual];
+  if(resp.respondeu) return;
+  resp.respondeu = true;
+  resp.escolhida = idx;
+  resp.correta = (idx === q.correta);
+  if(resp.correta) certas++; else erradas++;
+  renderQuestao();
+}
+
+function irQuestao(dir) {
+  const novo = qAtual + dir;
+  if(novo >= 0 && novo < questoesSimulado.length) {
+    qAtual = novo;
+    renderQuestao();
+    window.scrollTo(0,0);
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  FINALIZAR / RESULTADO
+// ════════════════════════════════════════════════════════
+function finalizarSimulado() {
+  pararCronometro();
+  const total = questoesSimulado.length;
+  const pct = Math.round(certas/total*100);
+  const aprovado = pct >= 60;
+
+  document.getElementById('emoji-resultado').textContent = pct >= 80 ? '🏆' : pct >= 60 ? '✅' : pct >= 40 ? '📚' : '💪';
+  const nota = document.getElementById('nota-display');
+  nota.textContent = pct + '%';
+  nota.className = 'nota-grande ' + (aprovado ? 'aprovado' : 'reprovado');
+  const status = document.getElementById('status-display');
+  status.textContent = aprovado ? 'Aprovado!' : 'Continue Estudando!';
+  status.className = 'status-label ' + (aprovado ? 'aprovado' : 'reprovado');
+  const msgs = {
+    100: 'Perfeito! Domínio total da matéria! 🌟',
+    80: 'Excelente! Você está muito bem preparado!',
+    60: 'Bom resultado! Revise os pontos errados.',
+    40: 'Continue estudando, falta pouco!',
+    0: 'Não desanime! Revise o conteúdo e tente novamente.',
+  };
+  const limiar = [100,80,60,40,0].find(l=>pct>=l);
+  document.getElementById('msg-resultado').textContent = msgs[limiar];
+  document.getElementById('res-certas').textContent = certas;
+  document.getElementById('res-erradas').textContent = erradas;
+  document.getElementById('res-total').textContent = total;
+
+  // por tema
+  const temaStats = {};
+  questoesSimulado.forEach((q,i) => {
+    if(!temaStats[q.tema]) temaStats[q.tema]={c:0,t:0};
+    temaStats[q.tema].t++;
+    if(respostas[i].correta) temaStats[q.tema].c++;
+  });
+  const resumoDiv = document.getElementById('resumo-temas');
+  let html = '<h4>Desempenho por tema:</h4>';
+  for(const [tema,st] of Object.entries(temaStats)) {
+    const p = Math.round(st.c/st.t*100);
+    const cor = CORES_TEMAS[tema];
+    html += `<div class="tema-linha">
+      <div class="nome" style="font-size:0.78rem;">${cor.label}</div>
+      <div class="barra-wrap"><div class="barra-fill" style="width:${p}%;background:${p>=60?'var(--verde)':'var(--vermelho)'}"></div></div>
+      <div class="pct" style="color:${p>=60?'var(--verde)':'var(--vermelho)'}">${p}%</div>
+    </div>`;
+  }
+  resumoDiv.innerHTML = html;
+
+  document.getElementById('btn-revisao').style.display = 'block';
+  mostrarTela('resultado');
+}
+
+// ════════════════════════════════════════════════════════
+//  REVISÃO
+// ════════════════════════════════════════════════════════
+function mostrarRevisao() {
+  const letras = ['A','B','C','D'];
+  let html = '';
+  questoesSimulado.forEach((q,i) => {
+    const r = respostas[i];
+    const certa = r.correta;
+    html += `<div class="revisao-item ${certa?'certa':'errada'}">
+      <div class="revisao-header">
+        <span style="font-size:0.75rem;font-weight:700;color:var(--texto-suave);">Q${i+1} · ${CORES_TEMAS[q.tema].label}</span>
+        <span class="badge ${certa?'badge-certa':'badge-errada'}">${certa?'✅ Correta':'❌ Incorreta'}</span>
+      </div>
+      <div class="revisao-q">${q.enunciado}</div>
+      <div class="revisao-resp">
+        <div class="revisao-correta">✓ Correta: ${letras[q.correta]}) ${q.alternativas[q.correta]}</div>
+        ${!certa ? `<div class="revisao-escolha">✗ Sua resposta: ${letras[r.escolhida]}) ${q.alternativas[r.escolhida]}</div>` : ''}
+      </div>
+      <div class="revisao-exp">${q.explicacao}</div>
+    </div>`;
+  });
+  document.getElementById('lista-revisao').innerHTML = html;
+  mostrarTela('revisao');
+}
+
+// ════════════════════════════════════════════════════════
+//  FLASHCARDS
+// ════════════════════════════════════════════════════════
+function filtrarFlash() {
+  const tema = document.getElementById('flash-tema-select').value;
+  flashcardsFiltrados = tema === 'todos' ? [...FLASHCARDS_ALL] : FLASHCARDS_ALL.filter(f=>f.tema===tema);
+  flashAtual = 0;
+  renderFlash();
+}
+
+function embaralharFlash() {
+  flashcardsFiltrados = embaralhar([...flashcardsFiltrados]);
+  flashAtual = 0;
+  renderFlash();
+}
+
+function virarFlash() {
+  document.getElementById('card-flash').classList.toggle('virado');
+}
+
+function navFlash(dir) {
+  const total = flashcardsFiltrados.length;
+  flashAtual = (flashAtual + dir + total) % total;
+  document.getElementById('card-flash').classList.remove('virado');
+  renderFlash();
+}
+
+function renderFlash() {
+  const f = flashcardsFiltrados[flashAtual];
+  if(!f) return;
+  document.getElementById('flash-pergunta').textContent = f.p;
+  document.getElementById('flash-resposta').textContent = f.r;
+  document.getElementById('flash-contador').textContent = `${flashAtual+1} / ${flashcardsFiltrados.length}`;
+  document.getElementById('card-flash').classList.remove('virado');
+}
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+mostrarTela('inicio');
+renderFlash();
+</script>
+</body>
+</html>
